@@ -43,10 +43,7 @@ function generate(nVar,nConstraints){
         tbody.appendChild(constraintTr);
     }
 
-    const simplexButton = document.createElement('tr');
-    simplexButton.innerHTML += `<button type="button" id="simplexMain-Button">Rodar metodo</button>`;
-    document.getElementById('simplexMain-Button').addEventListener('click',simplexMain);
-    tbody.appendChild(simplexButton);
+
     
 }
 

@@ -2,7 +2,7 @@ import {table} from './table.js';
 
 
 function simplexMain(){
-   verifyAll();
+   console.log(table());
 }
 
 export {simplexMain};
