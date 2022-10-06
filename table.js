@@ -1,7 +1,7 @@
 function table(){
-    const nVar = document.getElementById("numVar").value;
-    const nConstraints = document.getElementById("numConstraints").value;
-    const vetLen = parseInt(nVar) + parseInt(nConstraints) + 2;
+    var nVar = document.getElementById("numVar").value;
+    var nConstraints = document.getElementById("numConstraints").value;
+    var vetLen = parseInt(nVar) + parseInt(nConstraints) + 2;
     //pegar as formulas iniciais e inserir as folgas
     //f1 = Fo max
     const f1 = newArray('fomax');
@@ -70,4 +70,4 @@ function checkLen(obj){
     return c;
 }
 
-export {table};
+export {table, checkLen};
