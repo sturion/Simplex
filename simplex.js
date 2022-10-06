@@ -47,12 +47,29 @@ const newRowPivo = (table, pivoColumn, pivoRow) => {
    return nrP;
 }
 
-// const newRows = (table, nrP, pivoColumn) => {
-//    var newRows = new Array();
-//    let tableLen = checkLen(table);
+const newRows = (table, nrP, pivoColumn) => {
+   console.log('passo2');
+   var newRows = new Array();
+   let tableLen = checkLen(table);
+   let tableVetLen = checkLen(table[0]);
+   let nlCoef = new Array();
+   console.log(table);
 
-//    console.log(tableLen);
-// }
+   for(let i = 0 ; i < tableLen-1 ; i++){
+      newRows[i] = new Array();
+      let coef = (table[i][pivoColumn])*-1;
+
+      //table => pegar o coef(*-1) e multiplicar pela nrP
+      nrP.forEach(element => {
+         nlCoef.push(coef*element);
+      });
+
+      table[i].forEach(element => {
+         newRows[i].push(element+nlCoef[i]);
+      });
+   }
+   return newRows;
+}
 
 function simplexMain(){
    
@@ -78,7 +95,8 @@ const runMethod = (myTable,vetLen) => {
    //4-calcular nova linha pivo
    const nrP = newRowPivo(myTable, pivoColumn, pivoRow);
    //5-calcular linhas restantes
-   //const nlX = newRows(myTable, nrP, pivoColumn);
+   const nlX = newRows(myTable, nrP, pivoColumn);
+   console.log(nlX);
    //6-juntar linhas em uma tabela
    //recurssiva
    // console.log(myTable);
