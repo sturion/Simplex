@@ -10,23 +10,52 @@ const checkZ = (table) => {
 const findPivoColumn = (table) => {
    let tableLen = checkLen(table);
    let tableVetLen = checkLen(table[0]);
-   var biggestNegative = 0
+   var biggestNegative = Number.POSITIVE_INFINITY;
+   var pivoColumn;
 
    for(let i = 0 ; i < tableVetLen ; i++){
       if(table[tableLen-1][i] < biggestNegative){
          biggestNegative = table[tableLen-1][i];
+         pivoColumn = i;
       }
    }
-   for(let i = 0 ; i < tableVetLen ; i++){
-      if(table[tableLen-1][i] == biggestNegative){
-         return i
-      }
-   }
+   return pivoColumn;
 }
 
+const findPivoRow = (table, pivoColumn) => {
+   let tableLen = checkLen(table);
+   let tableVetLen = checkLen(table[0]);
+   var minorPositive = Number.POSITIVE_INFINITY;
+   var pivoRow;
+   
+   for(let i = 0 ; i < tableLen-1 ; i++){
+      if(table[i][tableVetLen-1]/table[i][pivoColumn] < minorPositive){
+         minorPositive = table[i][tableVetLen-1]/table[i][pivoColumn];
+         pivoRow = i;
+      }
+   }
+   return pivoRow;
+}
 
+const newRowPivo = (table, pivoColumn, pivoRow) => {
+   var nrP = new Array();
+
+   table[pivoRow].forEach(element => {
+      let newEl = element/table[pivoRow][pivoColumn];
+      nrP.push(newEl);
+   });
+   return nrP;
+}
+
+// const newRows = (table, nrP, pivoColumn) => {
+//    var newRows = new Array();
+//    let tableLen = checkLen(table);
+
+//    console.log(tableLen);
+// }
 
 function simplexMain(){
+   
    if(verifyAll){
       const myTable = table()[0];
       const vetLen = table()[1];
@@ -43,13 +72,18 @@ const runMethod = (myTable,vetLen) => {
       return 0;//resposta final
    }
    //2-loop para achar coluna pivo(maior negativo)
-   var pivoColumn = findPivoColumn(myTable);
+   const pivoColumn = findPivoColumn(myTable);
    //3-achar linha pivo, dividingo o resultado pela coluna pivo de cada um, o menr resultado positivo segue
-   
+   const pivoRow = findPivoRow(myTable, pivoColumn);
    //4-calcular nova linha pivo
+   const nrP = newRowPivo(myTable, pivoColumn, pivoRow);
    //5-calcular linhas restantes
+   //const nlX = newRows(myTable, nrP, pivoColumn);
    //6-juntar linhas em uma tabela
    //recurssiva
+   // console.log(myTable);
+   // console.log(pivoColumn);
+   // console.log(pivoRow);
 }
 
 export {simplexMain};
