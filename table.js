@@ -39,7 +39,7 @@ function table(){
     }
     table.push(f1);
     
-    return table;
+    return [table,vetLen];
   
 }
 
