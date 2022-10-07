@@ -91,16 +91,15 @@ const regroupRows = (nrP, nlX, pivoRow) => {
 
 function simplexMain(){
    
-   if(verifyAll){
+   if(verifyAll()){
       const myTable = table()[0];
-      const vetLen = table()[1];
-      runMethod(mock,0);
+      runMethod(myTable);
    }
 }
 
 
-const runMethod = (myTable,aux) => {
-   var aux = aux;
+const runMethod = (myTable) => {
+   
    var table = myTable;
    //mostrar solução (vb,vnb,z)
    //1-verifica se tem negatividade na max(z)
@@ -122,11 +121,8 @@ const runMethod = (myTable,aux) => {
    const newTable = regroupRows(nrP, nlX, pivoRow);
    
    console.log(newTable);
-   if(aux < 4){
-      aux++;
-      runMethod(newTable,aux)
-   }
-   //runMethod(newTable);
+   
+   runMethod(newTable);
 }
-simplexMain();
+
 export {simplexMain};
