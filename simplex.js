@@ -1,6 +1,12 @@
 import {table, checkLen} from './table.js';
 import {verifyAll} from './verifyFields.js';
 
+var mock = [[0,3,2,1,0,0,180],
+            [0,2,4,0,1,0,240],
+            [0,6,5,0,0,1,600],
+            [1,-21,-20,0,0,0,0]
+         ];
+
 
 const checkZ = (table) => {
    let tableLen = checkLen(table);
@@ -48,26 +54,36 @@ const newRowPivo = (table, pivoColumn, pivoRow) => {
 }
 
 const newRows = (table, nrP, pivoColumn) => {
-   console.log('passo2');
    var newRows = new Array();
    let tableLen = checkLen(table);
    let tableVetLen = checkLen(table[0]);
    let nlCoef = new Array();
    console.log(table);
-
+   console.log(nrP);
    for(let i = 0 ; i < tableLen-1 ; i++){
       newRows[i] = new Array();
+      nlCoef[i] = new Array();
       let coef = (table[i][pivoColumn])*-1;
 
       //table => pegar o coef(*-1) e multiplicar pela nrP
+      
       nrP.forEach(element => {
-         nlCoef.push(coef*element);
+         nlCoef[i].push(coef*element);
       });
+      
 
-      table[i].forEach(element => {
-         newRows[i].push(element+nlCoef[i]);
-      });
+      // table[i].forEach(element => {
+      //    newRows[i].push(element+nlCoef[i]);
+      // });
+
+      for(let j = 0 ; j < tableVetLen ; j++){
+         
+         newRows[i].push(table[i][j]+nlCoef[i][j])
+      }
    }
+   
+   console.log(nlCoef);
+   console.log(newRows);
    return newRows;
 }
 
@@ -76,11 +92,12 @@ function simplexMain(){
    if(verifyAll){
       const myTable = table()[0];
       const vetLen = table()[1];
-      runMethod(myTable,vetLen);
+      runMethod(mock);
    }
 }
 
-const runMethod = (myTable,vetLen) => {
+
+const runMethod = (myTable) => {
    var table = myTable;
    //mostrar solução (vb,vnb,z)
    //1-verifica se tem negatividade na max(z)
@@ -96,12 +113,11 @@ const runMethod = (myTable,vetLen) => {
    const nrP = newRowPivo(myTable, pivoColumn, pivoRow);
    //5-calcular linhas restantes
    const nlX = newRows(myTable, nrP, pivoColumn);
-   console.log(nlX);
    //6-juntar linhas em uma tabela
    //recurssiva
    // console.log(myTable);
    // console.log(pivoColumn);
    // console.log(pivoRow);
 }
-
+simplexMain();
 export {simplexMain};
