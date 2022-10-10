@@ -1,9 +1,14 @@
 import {table, checkLen} from './table.js';
 import {verifyAll} from './verifyFields.js';
+import {setSolution} from './solution.js';
+import {loadTable} from './loadTableStep.js';
+import { simplexAnswer } from './loadSimplexAnswer.js';
 
-var mock = [[0,2,1,1,0,6],
-            [0,10,12,0,1,60],
-            [1,-5,-2,0,0,0]
+var mock = [[0,2,1,1,0,0,0,1000],
+            [0,1,1,0,1,0,0,800],
+            [0,1,0,0,0,1,0,400],
+            [0,0,1,0,0,0,1,700],
+            [1,-4,-3,0,0,0,0,0]
          ];
 
 
@@ -101,12 +106,15 @@ function simplexMain(){
 const runMethod = (myTable) => {
    
    var table = myTable;
+   
+   
    //mostrar solução (vb,vnb,z)
    //1-verifica se tem negatividade na max(z)
    if(!checkZ(table) == true){
       console.log('n tem negativo');
-      console.log(table);
-      return 0;//resposta final
+      let solution = setSolution(table);
+      simplexAnswer(table,solution);
+      return table;//resposta final
    }
    //2-loop para achar coluna pivo(maior negativo)
    const pivoColumn = findPivoColumn(myTable);
@@ -119,9 +127,7 @@ const runMethod = (myTable) => {
    const nlX = newRows(myTable, pivoColumn, pivoRow, nrP);
    //6-juntar linhas em uma tabela
    const newTable = regroupRows(nrP, nlX, pivoRow);
-   
-   console.log(newTable);
-   
+   loadTable(table);
    runMethod(newTable);
 }
 
