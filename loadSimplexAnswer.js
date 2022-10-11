@@ -1,5 +1,6 @@
 import {loadTable} from './loadTableStep.js';
 import {checkLen} from './table.js';
+//salve léo
 
 function simplexAnswer(table, solution){
     loadTable(table);
